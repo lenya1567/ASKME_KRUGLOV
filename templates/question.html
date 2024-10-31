@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question</title>
+
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+
+<body>
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-semibold" href="index.html">AskPupkin</a>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-success" type="submit">Ask!</button>
+            </form>
+
+            <div class="row">
+                <img src="../static/img/avatars/profile_1.svg" class="col-3 my-profile-img" alt="avatar">
+                <div class="col-9">
+                    <div>Dr. Pepper</div>
+                    <div>
+                        <a class="col me-2" href="settings.html">settings</a>
+                        <a class="col" href="#">log out</a>
+                    </div>
+                </div>
+            </div>
+
+            <!--
+            <div class="row">
+                <a class="col" href="./login.html">Log in</a>
+                <a class="col" href="./signup.html">Register</a>
+            </div>
+            -->
+
+        </div>
+    </nav>
+    <main class="container-fluid bd-layout d-flex justify-content-between align-items-start p-3 pb-0 gap-3">
+        <div class="w-75">
+            <div class="d-grid gap-3">
+                <div class="row border-bottom border-3 pb-3 ms-0 me-0">
+                    <div class="ps-0 col-2 d-flex flex-column justify-content-between">
+                        <img src="../static/img/avatars/profile_2.webp" class="img-thumbnail rounded my-img mb-3"
+                            alt="avatar">
+                        <input class="form-control w-75" type="number" value="5" />
+                    </div>
+                    <div class="col-10 d-flex flex-column justify-content-between">
+                        <div>
+                            <a href="#" class="fs-4 link">Где спряталось сопротивление?</a>
+                            <article class="mt-1 mb-4">
+                                Дорогие члены имперского сената! Кто-нибудь из вас знает, где прячутся мятежники?
+                            </article>
+                        </div>
+                        <div class="d-flex flex-wrap gap-2 align-items-center">
+                            <a href="#">answers (2)</a>
+                            <span class="ms-3">Tags:</span>
+                            <a href="#">dart-veider-blog</a>
+                            <a href="#">broken-neck</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body row">
+                        <div class="col-2 d-flex flex-column justify-content-between">
+                            <img src="../static/img/avatars/profile_2.webp" class="img-thumbnail rounded my-img mb-3"
+                                alt="avatar">
+                            <input class="form-control w-75" type="number" value="5" />
+                        </div>
+                        <div class="col-10 d-flex flex-column justify-content-between">
+                            <div>
+                                <article class="mb-4">
+                                    База мятежников обнаружена в системе Явин, на планете Явин-4.
+                                </article>
+                            </div>
+                            <div class="d-flex flex-wrap gap-2 align-items-center">
+                                <input type="checkbox" id="correct_1" checked>
+                                <label for="correct_1">Correct</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body row">
+                        <div class="col-2 d-flex flex-column justify-content-between">
+                            <img src="../static/img/avatars/profile_2.webp" class="img-thumbnail rounded my-img mb-3"
+                                alt="avatar">
+                            <input class="form-control w-75" type="number" value="5" />
+                        </div>
+                        <div class="col-10 d-flex flex-column justify-content-between">
+                            <div>
+                                <article class="mb-4">
+                                    В моей системе мятежников не обнаружилось.
+                                </article>
+                            </div>
+                            <div class="d-flex flex-wrap gap-2 align-items-center">
+                                <input type="checkbox" id="correct_2">
+                                <label for="correct_2">Correct</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ul class="pagination mb-0">
+                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">...</a></li>
+                    <li class="page-item"><a class="page-link" href="#">5</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+                <div class="pt-3 border-top border-3 mb-3">
+                    <textarea class="form-control my-t-area" placeholder="Enter your answer here..."></textarea>
+                    <button class="btn btn-success mt-3" maxlength="32">Answer</button>
+                </div>
+            </div>
+        </div>
+        <div class="w-25">
+            <h2 class="m-0 mb-3">Popular Tags</h2>
+            <div class="d-flex gap-2 flex-wrap ">
+                <span class="badge fs-6 text-bg-primary">Perl</span>
+                <span class="badge fs-6 text-bg-success">Python</span>
+                <span class="badge fs-6 text-bg-success">TechnoPark</span>
+                <span class="badge fs-6 text-bg-secondary">JavaScript</span>
+                <span class="badge fs-6 text-bg-danger">Java</span>
+                <span class="badge fs-6 text-bg-danger">MySQL</span>
+                <span class="badge fs-6 text-bg-secondary">Swift</span>
+                <span class="badge fs-6 text-bg-secondary">Dart</span>
+            </div>
+            <h2 class="m-0 mt-4 mb-2">Best members</h2>
+            <div class="d-flex flex-column gap-2">
+                <a href="#" class="">Mr. Freeman</a>
+                <a href="#" class="">Dr. House</a>
+                <a href="#" class="">Bender</a>
+                <a href="#" class="">Queen Victoria</a>
+                <a href="#" class="">V. Pupkin</a>
+            </div>
+        </div>
+    </main>
+    <footer class="footer bg-body-tertiary p-3">
+        2024. Kruglov Leonid
+    </footer>
+    <script src="../static/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
