@@ -1,0 +1,43 @@
+{% extends 'layouts/skeleton.html' %}
+{% load static %}
+{% block content %}
+<div class="d-flex justify-content-start align-items-center mb-3">
+    <h2 class="m-0 me-5">New Question</h2>
+</div>
+<div class="mb-3 my-err">
+    Please entry answer name!
+</div>
+<div class="col d-flex flex-column gap-3">
+    <div class="row align-items-start">
+        <div class="col-2 my-lh-38">
+            Title:
+        </div>
+        <div class="col-10">
+            <input class="form-control my-err-form" maxlength="32" type="text">
+        </div>
+    </div>
+    <div class="row align-items-start">
+        <div class="col-2 my-lh-38">
+            Text:
+        </div>
+        <div class="col-10">
+            <textarea class="form-control my-t-area"></textarea>
+        </div>
+    </div>
+    <div class="row align-items-start">
+        <div class="col-2 my-lh-38">
+            Tags:
+        </div>
+        <div class="col-10">
+            <input class="form-control" type="text">
+        </div>
+    </div>
+    <div class="row align-items-start">
+        <div class="col-2 my-lh-38">
+        </div>
+        <div class="col-10">
+            <button class="btn btn-success" maxlength="32">ASK!</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

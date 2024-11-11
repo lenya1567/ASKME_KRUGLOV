@@ -1,0 +1,49 @@
+<ul class="pagination">
+    {% if page.has_previous %} 
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page.previous_page_number }}">Previous</a>
+        </li> 
+        <li class="page-item">
+            {% if page.has_next == False and page.paginator.num_pages > 2 %}
+                <a class="page-link" href="?page={{ page.number|add:-2 }}">
+                    {{ page.number|add:-2  }}
+                </a>
+            {% else %}
+                <a class="page-link" href="?page={{ page.number|add:-1 }}">
+                    {{ page.number|add:-1  }}
+                </a>
+            {% endif %}
+        </li> 
+    {% endif %}
+    {% if page.paginator.num_pages > 1 %} 
+        <li class="page-item">
+            {% if page.has_next or page.paginator.num_pages < 3 %}
+                <a class="page-link active" href="?page={{ page.number }}">
+                    {{ page.number }}
+                </a>
+            {% else %}
+                <a class="page-link" href="?page={{ page.number|add:-1 }}">
+                    {{ page.number|add:-1 }}
+                </a>
+            {% endif %}
+        </li> 
+    {% endif %}
+    {% if page.paginator.num_pages > 2 or page.has_previous == False %} 
+        <li class="page-item">
+            {% if page.has_next %}
+                <a class="page-link" href="?page={{ page.number|add:1 }}">
+                    {{ page.number|add:1 }}
+                </a>
+            {% else %}
+                <a class="page-link active"  href="?page={{ page.number }}">
+                    {{ page.number }}
+                </a>
+            {% endif %}
+        </li> 
+    {% endif %}
+    {% if page.has_next %} 
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page.next_page_number }}">Next</a>
+        </li> 
+    {% endif %}
+</ul>

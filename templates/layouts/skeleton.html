@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+</head>
+
+<body>
+    <nav class="skeleton-nav navbar bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-semibold" href="{% url "index" %}">AskPupkin</a>
+            <form class="d-flex" role="search" action="{% url "ask" %}">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-success" type="submit">Ask!</button>
+            </form>
+
+            {% if user != None %}
+            <div class="row">
+                <img src="{% static user.avatar %}" class="col-3 my-profile-img" alt="avatar">
+                <div class="col-9">
+                    <div>{{ user.name }}</div>
+                    <div>
+                        <a class="col me-2" href="{% url "settings" %}">settings</a>
+                        <a class="col" href="{% url "index" %}">log out</a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="row">
+                <a class="col" href="{% url "login" %}">Log in</a>
+                <a class="col" href="{% url "signup" %}">Register</a>
+            </div>
+            {% endif %}
+
+        </div>
+    </nav>
+    <main class="skeleton-main container-fluid bd-layout d-flex align-items-start p-3 pb-0 gap-3">
+        <div class="w-75">
+            {% block content %}
+        
+            {% endblock %}
+        </div>
+        <div class="w-25">
+            <h2 class="m-0 mb-3">Popular Tags</h2>
+            <div class="d-flex gap-2 flex-wrap">
+                {% for ptag in popular_tags %}
+                    <span class="badge fs-6 text-bg-success">
+                        <a class="not_a" href="{% url "tag" ptag %}">{{ ptag }}</a>
+                    </span>
+                {% endfor %}
+            </div>
+            <h2 class="m-0 mt-4 mb-2">Best members</h2>
+            <div class="d-flex flex-column gap-2">
+            <a href="#" class="">Mr. Freeman</a>
+            <a href="#" class="">Dr. House</a>
+            <a href="#" class="">Bender</a>
+            <a href="#" class="">Queen Victoria</a>
+            <a href="#" class="">V. Pupkin</a>
+            </div>
+        </div>
+    </main>
+    <footer class="skeleton-footer footer bg-body-tertiary p-3">
+        2024. Kruglov Leonid
+    </footer>
+</body>
+
+</html>

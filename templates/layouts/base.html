@@ -1,0 +1,32 @@
+{% extends 'layouts/skeleton.html' %}
+{% load static %}
+{% block main %}
+<main class="container-fluid bd-layout d-flex align-items-start p-3 pb-0 gap-3">
+  <div class="w-75">
+    {% block content %}
+
+    {% endblock %}
+  </div>
+  <div class="w-25">
+    <h2 class="m-0 mb-3">Popular Tags</h2>
+    <div class="d-flex gap-2 flex-wrap">
+      <span class="badge fs-6 text-bg-primary">Perl</span>
+      <span class="badge fs-6 text-bg-success">Python</span>
+      <span class="badge fs-6 text-bg-success">TechnoPark</span>
+      <span class="badge fs-6 text-bg-secondary">JavaScript</span>
+      <span class="badge fs-6 text-bg-danger">Java</span>
+      <span class="badge fs-6 text-bg-danger">MySQL</span>
+      <span class="badge fs-6 text-bg-secondary">Swift</span>
+      <span class="badge fs-6 text-bg-secondary">Dart</span>
+    </div>
+    <h2 class="m-0 mt-4 mb-2">Best members</h2>
+    <div class="d-flex flex-column gap-2">
+      <a href="#" class="">Mr. Freeman</a>
+      <a href="#" class="">Dr. House</a>
+      <a href="#" class="">Bender</a>
+      <a href="#" class="">Queen Victoria</a>
+      <a href="#" class="">V. Pupkin</a>
+    </div>
+  </div>
+</main>
+{% endblock %}

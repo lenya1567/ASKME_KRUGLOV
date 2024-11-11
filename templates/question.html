@@ -1,0 +1,19 @@
+{% extends 'layouts/skeleton.html' %}
+{% load static %}
+{% block content %}
+<div class="d-grid gap-3">
+    <div class="d-grid gap-3">
+        <div class="row border-bottom border-3 pb-3 ms-0 me-0">
+            {% include "layouts/question_content.html" with question=question %}
+        </div>
+    </div>
+    {% for answer in answers %}
+        {% include "layouts/answer.html" with answer=answer %}
+    {% endfor %}
+    {% include "layouts/paginator.html" with page=page %}
+    <div class="pt-3 border-top border-3 mb-3">
+        <textarea class="form-control my-t-area" placeholder="Enter your answer here..."></textarea>
+        <button class="btn btn-success mt-3" maxlength="32">Answer</button>
+    </div>
+</div>
+{% endblock %}

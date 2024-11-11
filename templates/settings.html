@@ -1,0 +1,50 @@
+{% extends 'layouts/skeleton.html' %}
+{% load static %}
+{% block content %}
+<div class="d-flex justify-content-start align-items-center mb-3">
+    <h2 class="m-0 me-5">Settings: Dr. Pepper</h2>
+</div>
+<div class="col d-flex flex-column gap-3">
+    <div class="row align-items-start">
+        <div class="col-3 my-lh-38">
+            Login:
+        </div>
+        <div class="col-9">
+            <input class="form-control" maxlength="15" type="text">
+        </div>
+    </div>
+    <div class="row align-items-start">
+        <div class="col-3 my-lh-38">
+            Email:
+        </div>
+        <div class="col-9">
+            <input class="form-control" maxlength="32" type="text">
+        </div>
+    </div>
+    <div class="row align-items-start">
+        <div class="col-3 my-lh-38">
+            NickName:
+        </div>
+        <div class="col-9">
+            <input class="form-control" maxlength="32" type="text">
+        </div>
+    </div>
+    <div class="row align-items-start">
+        <div class="col-3 my-lh-38">
+            Upload avatar:
+        </div>
+        <div class="col-9">
+            <img src="../static/img/avatars/profile_1.svg" class="col-3" alt="avatar">
+            <input class="form-control mt-3" id="formFileLg" type="file"
+                accept=".png,.jpg,.jpeg,.webp,.svg">
+        </div>
+    </div>
+    <div class="row align-items-start">
+        <div class="col-3 my-lh-38">
+        </div>
+        <div class="col-9">
+            <button class="btn btn-success" maxlength="32">Save</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

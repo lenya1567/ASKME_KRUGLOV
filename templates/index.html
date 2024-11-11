@@ -1,0 +1,14 @@
+{% extends 'layouts/skeleton.html' %}
+{% load static %}
+{% block content %}
+    <div class="d-flex justify-content-start align-items-center mb-3">
+        <h2 class="m-0 me-5">New Questions</h2>
+        <a href="{% url "hot_question" %}">Hot questions</a>
+    </div>
+    <div class="d-grid gap-3">
+        {% for question in questions %}
+            {% include "layouts/question.html" with question=question %}
+        {% endfor %}
+        {% include "layouts/paginator.html" with page=page %}
+    </div>
+{% endblock %}
