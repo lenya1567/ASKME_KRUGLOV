@@ -1,33 +1,33 @@
 <div class="col-2 d-flex flex-column justify-content-between">
     <img src="../static/img/avatars/profile_2.webp" class="img-thumbnail rounded my-img mb-3" alt="avatar" />
-    {% if question.myLike %}
+    {% if question.myLike and False %}
     <input 
         class="form-control w-75" 
         type="number" 
-        value="{{ question.likes }}"
-        min="{{ question.likes|add:-1 }}"
-        max="{{ question.likes }}"
+        value="{{ question.question_like.count }}"
+        min="{{ question.question_like.count|add:-1 }}"
+        max="{{ question.question_like.count }}"
     >
     {% else %}
     <input 
         class="form-control w-75" 
         type="number" 
-        value="{{ question.likes }}"
-        min="{{ question.likes }}"
-        max="{{ question.likes|add:1 }}"
+        value="{{ question.question_like.count }}"
+        min="{{ question.question_like.count }}"
+        max="{{ question.question_like.count|add:1 }}"
     >
     {% endif %}
 </div>
 <div class="col-10 d-flex flex-column justify-content-between">
     <div>
-        <a href="{% url "question" question.id %}" class="fs-4 link">{{ question.title }}</a>
-        <article class="mt-1 mb-4">{{ question.text }}</article>
+        <a href="{% url "question" question.id %}" class="fs-4 link">{{ question.name }}</a>
+        <article class="mt-1 mb-4">{{ question.description }}</article>
     </div>
     <div class="d-flex flex-wrap gap-2 align-items-center">
-        <a href="{% url "question" question.id %}">answers ({{ question.answers_count }})</a>
+        <a href="{% url "question" question.id %}">answers ({{ question.question_answer.count }})</a>
         <span class="ms-3">Tags:</span>
-        {% for tag in question.tags %}
-            <a href="{% url "tag" tag %}">{{ tag }}</a>
+        {% for tag in question.tags.all %}
+            <a href="{% url "tag" tag.name %}">{{ tag.name }}</a>
         {% endfor %}
     </div>
 </div>

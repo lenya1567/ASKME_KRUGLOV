@@ -51,17 +51,15 @@
             <div class="d-flex gap-2 flex-wrap">
                 {% for ptag in popular_tags %}
                     <span class="badge fs-6 text-bg-success">
-                        <a class="not_a" href="{% url "tag" ptag %}">{{ ptag }}</a>
+                        <a class="not_a" href="{% url "tag" ptag.name %}">{{ ptag.name }}</a>
                     </span>
                 {% endfor %}
             </div>
             <h2 class="m-0 mt-4 mb-2">Best members</h2>
             <div class="d-flex flex-column gap-2">
-            <a href="#" class="">Mr. Freeman</a>
-            <a href="#" class="">Dr. House</a>
-            <a href="#" class="">Bender</a>
-            <a href="#" class="">Queen Victoria</a>
-            <a href="#" class="">V. Pupkin</a>
+            {% for author in popular_authors %}
+                <a href="#" class="">{{ author.user.username }}</a>
+            {% endfor %}
             </div>
         </div>
     </main>
