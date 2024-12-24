@@ -1,12 +1,13 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render, redirect
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.contrib.auth.decorators import login_required
+from django.contrib import auth
+from django.urls import reverse
+
+from urllib.parse import urlencode
 
 from app.models import *
-
-testUser = {
-    "name": "Master Yoda",
-    "avatar": "/img/avatars/profile_1.svg",
-}
+from app.forms import *
 
 def paginate(objects_list, request, per_page=10):
     try: 
@@ -23,12 +24,17 @@ def paginate(objects_list, request, per_page=10):
 
     return page
 
+def pageView(request, template, context):
+    if type(context) == dict:
+        return render(request, template, context)
+    else:
+        return context
+
 def indexPageContext(request):
     page = paginate(Question.objects.latest(), request)
     return {
         "questions": page.object_list, 
-        "page": page, 
-        "user": testUser,
+        "page": page,
         "popular_tags": Tag.objects.popular(),
         "popular_authors": Profile.objects.popular(),
     }
@@ -38,7 +44,6 @@ def hotPageContext(request):
     return {
         "questions": page.object_list, 
         "page": page, 
-        "user": testUser,
         "popular_tags": Tag.objects.popular(),
         "popular_authors": Profile.objects.popular(),
     }
@@ -50,33 +55,106 @@ def tagPageContext(request, tag_name):
         "tag": tag,
         "questions": page.object_list, 
         "page": page, 
-        "user": testUser,
         "popular_tags": Tag.objects.popular(),
         "popular_authors": Profile.objects.popular(),
     }
 
 def questionPageContext(request, question_id):
     question = get_object_or_404(Question, id=question_id)
-    page = paginate(question.question_answer.all(), request)
+    
+    form = AnswerForm
+    if request.method == "POST":
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            answer = form.save(request.user, question)
+            pageIndex = abs(len(question.answers()) - 1) // 10 + 1
+            return redirect(reverse("question", args=[question.id]) + f"?page={pageIndex}#answer_{answer.id}")
+    
+    page = paginate(question.answers(), request)
+    
     return {
+        "form": form,
         "question": question,
         "answers": page.object_list, 
         "page": page, 
-        "user": testUser,
         "popular_tags": Tag.objects.popular(),
         "popular_authors": Profile.objects.popular(),
     }
 
+def loginPageContext(request):
+    form = LoginForm
+    
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        
+        if form.is_valid():
+            user = auth.authenticate(**form.cleaned_data)
+            if user:
+                auth.login(request, user)
+                return redirect(request.GET.get("continue", "/"))
+            else:
+                form.add_error("username", "Пользователь не найден!")
+    
+    return {
+        "form": form,
+    }
+    
+def registerPageContext(request):
+    form = RegisterForm
+    
+    if request.method == "POST":
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            user = auth.authenticate(**form.cleaned_data)
+            auth.login(request, user)
+            return redirect(reverse('index'))
+    
+    return {
+        "form": form,
+    }
+
+@login_required(redirect_field_name="continue")
+def settingsContext(request):
+    if request.method == "POST":
+        form = SettingsForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            
+    form = SettingsForm(instance=request.user)
+    
+    return {
+        "form": form,
+        "popular_tags": Tag.objects.popular(),
+        "popular_authors": Profile.objects.popular(),
+    }
+    
+@login_required(redirect_field_name="continue")
+def askPageContext(request):
+    form = QuestionForm
+    
+    if request.method == "POST":
+        form = QuestionForm(request.POST)
+        if form.is_valid():
+            newQuestion = form.save(request.user)
+            return redirect(reverse("question", args=[newQuestion.id]))
+    
+    return {
+        "form": form,
+    }
+
 def defaultContext(request):
     return {
-        "user": testUser,
         "popular_tags": Tag.objects.popular(),
         "popular_authors": Profile.objects.popular(),
     }
 
 def defaultNotLoginContext(request):
     return {
-        "user": None,
         "popular_tags": Tag.objects.popular(),
         "popular_authors": Profile.objects.popular(),
     }
+
+def logoutContext(request):
+    auth.logout(request)
+    return redirect(request.META.get('HTTP_REFERER'))

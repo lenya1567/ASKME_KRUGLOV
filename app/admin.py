@@ -12,7 +12,6 @@ admin.register(AnswerLike)
 
 admin.register(QuestionTag)
 
-
 admin.site.register(Profile)
 admin.site.register(Tag)
 admin.site.register(Question)

@@ -20,14 +20,14 @@
                 <button class="btn btn-success" type="submit">Ask!</button>
             </form>
 
-            {% if user != None %}
-            <div class="row">
-                <img src="{% static user.avatar %}" class="col-3 my-profile-img" alt="avatar">
+            {% if request.user.is_authenticated %}
+            <div class="row" style="min-width: 200px">
+                <img src="/static/img/avatars{{request.user.profile.avatar}}" class="col-3 my-profile-img" alt="avatar">
                 <div class="col-9">
-                    <div>{{ user.name }}</div>
+                    <div>{{ request.user.first_name }}</div>
                     <div>
                         <a class="col me-2" href="{% url "settings" %}">settings</a>
-                        <a class="col" href="{% url "index" %}">log out</a>
+                        <a class="col" href="{% url "logout" %}">log out</a>
                     </div>
                 </div>
             </div>
@@ -66,6 +66,8 @@
     <footer class="skeleton-footer footer bg-body-tertiary p-3">
         2024. Kruglov Leonid
     </footer>
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>
 
 </html>

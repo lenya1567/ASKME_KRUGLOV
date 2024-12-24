@@ -65,7 +65,7 @@ class Command(BaseCommand):
 
             for j in range(min(totalCount - index, dbBuffer)):
                 user = User(username=f"user_{index}", email=f"user_{index}@gmail.com", password="password")
-                profile = Profile(user=user)
+                profile = Profile(user=user, avatar="/default_profile.webp")
                 
                 allProfiles[index] = profile
                 newUsers.append(user)

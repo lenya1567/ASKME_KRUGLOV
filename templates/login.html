@@ -1,36 +1,16 @@
 {% extends 'layouts/skeleton.html' %}
 {% load static %}
+{% load bootstrap5 %}
 {% block content %}
 <div class="d-flex justify-content-start align-items-center mb-3">
     <h2 class="m-0 me-5">Login</h2>
 </div>
-<div class="mb-3 my-err">
-    Sorry, wrong password!
-</div>
-<div class="col d-flex flex-column gap-3 w-75">
-    <div class="row align-items-start">
-        <div class="col-2 my-lh-38">
-            Login:
-        </div>
-        <div class="col-10">
-            <input class="form-control" maxlength="32" type="text" value="master_yoda">
-        </div>
-    </div>
-    <div class="row align-items-start">
-        <div class="col-2 my-lh-38">
-            Password:
-        </div>
-        <div class="col-10">
-            <input class="form-control my-err-form" type="password">
-        </div>
-    </div>
-    <div class="row align-items-start">
-        <div class="col-2 my-lh-38">
-        </div>
-        <div class="col-10">
-            <button class="btn btn-success" maxlength="32">Log in!</button>
-            <a href="{% url "signup" %}" class="ms-3">Create new account</a>
-        </div>
-    </div>
-</div>
+<form class="w-50" method="POST" action="">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+        <button class="btn btn-success" type="submit" maxlength="32">Log in!</button>
+        <a href="{% url "signup" %}" class="ms-3">Create new account</a>
+    {% endbuttons %}
+</form>
 {% endblock %}

@@ -25,8 +25,8 @@ class QuestionManager(models.Manager):
 # Models
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.CharField(max_length=256)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
+    avatar = models.ImageField(upload_to="images/", null=True, blank=True, default="/default_profile.webp")
     objects = ProfileManager()
 
 class Tag(models.Model):
@@ -40,6 +40,9 @@ class Question(models.Model):
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag, related_name="question_tags", through="QuestionTag")
     objects = QuestionManager()
+    
+    def answers(self):
+        return self.question_answer.annotate(likes_count = models.Count("answer_like")).order_by("createdAt").order_by("-likes_count")
 
 class QuestionLike(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="question_like")

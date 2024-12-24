@@ -1,67 +1,15 @@
 {% extends 'layouts/skeleton.html' %}
 {% load static %}
+{% load bootstrap5 %}
 {% block content %}
 <div class="d-flex justify-content-start align-items-center mb-3">
     <h2 class="m-0 me-5">Registration</h2>
 </div>
-<div class="mb-3 my-err">
-    Sorry, this email address already registed!
-</div>
-<div class="col d-flex flex-column gap-3  w-75">
-    <div class="row align-items-start">
-        <div class="col-3 my-lh-38">
-            Login:
-        </div>
-        <div class="col-9">
-            <input class="form-control" maxlength="15" type="text">
-        </div>
-    </div>
-    <div class="row align-items-start">
-        <div class="col-3 my-lh-38">
-            Email:
-        </div>
-        <div class="col-9">
-            <input class="form-control my-err-form" maxlength="32" type="text">
-        </div>
-    </div>
-    <div class="row align-items-start">
-        <div class="col-3 my-lh-38">
-            NickName:
-        </div>
-        <div class="col-9">
-            <input class="form-control" maxlength="32" type="text">
-        </div>
-    </div>
-    <div class="row align-items-start">
-        <div class="col-3 my-lh-38">
-            Password:
-        </div>
-        <div class="col-9">
-            <input class="form-control" maxlength="32" type="password">
-        </div>
-    </div>
-    <div class="row align-items-start">
-        <div class="col-3 my-lh-38">
-            Repeat password:
-        </div>
-        <div class="col-9">
-            <input class="form-control" maxlength="32" type="password">
-        </div>
-    </div>
-    <div class="row align-items-start">
-        <div class="col-3 my-lh-38">
-            Upload avatar:
-        </div>
-        <div class="col-9">
-            <input class="form-control" id="formFileLg" type="file" accept=".png,.jpg,.jpeg,.webp,.svg">
-        </div>
-    </div>
-    <div class="row align-items-start">
-        <div class="col-3 my-lh-38">
-        </div>
-        <div class="col-9">
-            <button class="btn btn-success" maxlength="32">Register!</button>
-        </div>
-    </div>
-</div>
+<form class="w-50" method="POST" action="{% url "signup" %}">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+        <button class="btn btn-success" maxlength="32" type="submit">Register!</button>
+    {% endbuttons %}
+</form>
 {% endblock %}
