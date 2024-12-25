@@ -12,14 +12,16 @@
         {% include "layouts/answer.html" with answer=answer %}
     {% endfor %}
     {% include "layouts/paginator.html" with page=page %}
-    <div class="pt-3 border-top border-3 mb-3">
+    {% if request.user.is_authenticated %}
+    <div class="pt-3 border-top border-3">
         <form class="w-50" method="POST" action="">
             {% csrf_token %}
             {% bootstrap_form form %}
             {% buttons %}
-                <button class="btn btn-success mt-3" maxlength="32">Answer</button>
+                <button class="btn btn-success" maxlength="32">Answer</button>
             {% endbuttons %}
         </form>
     </div>
+    {% endif %}
 </div>
 {% endblock %}

@@ -42,13 +42,17 @@ class RegisterForm(forms.ModelForm):
         
         return data
         
-    def save(self, commit=True):
+    def save(self, file, commit=True):
         user = super().save(commit=False)
         
         user.set_password(self.cleaned_data["password"])
         user.save()
         
         profile = Profile.objects.create(user=user)
+        
+        if file != None:
+            profile.avatar.save(file.name, file)
+        
         profile.save()
         
         return user
@@ -74,11 +78,14 @@ class SettingsForm(forms.ModelForm):
         
         return data
         
-    def save(self, commit=True):
+    def save(self, file, commit=True):
         user = super().save(commit=True)
         
         profile = Profile.objects.get(user=user)
-        # profile.avatar = self.cleaned_data["avatar"]
+        
+        if file != None:
+            profile.avatar.save(file.name, file)
+        
         profile.save()
         
         return user

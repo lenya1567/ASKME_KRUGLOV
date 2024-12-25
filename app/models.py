@@ -1,6 +1,28 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+# Check if user liked this question/answer
+
+def loadQuestionsLike(objects, user):
+    if not user.is_authenticated:
+        return objects
+    if type(objects) != Question:
+        for obj in objects:
+            obj.liked_me = QuestionLike.objects.filter(question=obj, author=user.profile).exists()
+    else:
+        objects.liked_me = QuestionLike.objects.filter(question=objects, author=user.profile).exists()
+    return objects
+
+def loadAnswersLike(objects, user):
+    if not user.is_authenticated:
+        return objects
+    if type(objects) != Answer:
+        for obj in objects:
+            obj.liked_me = AnswerLike.objects.filter(answer=obj, author=user.profile).exists()
+    else:
+        objects.liked_me = AnswerLike.objects.filter(answer=objects, author=user.profile).exists()
+    return objects
+
 # Managers
 
 class ProfileManager(models.Manager):
@@ -26,7 +48,7 @@ class QuestionManager(models.Manager):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
-    avatar = models.ImageField(upload_to="images/", null=True, blank=True, default="/default_profile.webp")
+    avatar = models.ImageField(upload_to="images/", null=True, blank=True, default="images/default.png")
     objects = ProfileManager()
 
 class Tag(models.Model):
@@ -41,8 +63,22 @@ class Question(models.Model):
     tags = models.ManyToManyField(Tag, related_name="question_tags", through="QuestionTag")
     objects = QuestionManager()
     
+    def hasLike(self, user):
+        return len(QuestionLike.objects.check(author=user, question=self)) > 0
+    
     def answers(self):
-        return self.question_answer.annotate(likes_count = models.Count("answer_like")).order_by("createdAt").order_by("-likes_count")
+        return self.question_answer.annotate(likes_count = models.Count("answer_like")).order_by("createdAt").order_by("-likes_count").order_by("-isRight")
+
+    def changeRightAnswer(self, rightAnswer):
+        result = Answer.objects.filter(question=self, isRight=True)
+        
+        if result.exists():
+            oldRightAnswer = result[0]
+            oldRightAnswer.isRight = False
+            oldRightAnswer.save()
+        
+        rightAnswer.isRight = True
+        rightAnswer.save()
 
 class QuestionLike(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="question_like")

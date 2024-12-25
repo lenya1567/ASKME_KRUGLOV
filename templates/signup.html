@@ -5,9 +5,10 @@
 <div class="d-flex justify-content-start align-items-center mb-3">
     <h2 class="m-0 me-5">Registration</h2>
 </div>
-<form class="w-50" method="POST" action="{% url "signup" %}">
+<form class="w-50" method="POST" action="{% url "signup" %}" enctype="multipart/form-data">
     {% csrf_token %}
     {% bootstrap_form form %}
+    
     {% buttons %}
         <button class="btn btn-success" maxlength="32" type="submit">Register!</button>
     {% endbuttons %}

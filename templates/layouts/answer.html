@@ -1,15 +1,32 @@
+{% load static %}
 <div id="answer_{{ answer.id }}" class="card">
     <div class="card-body row">
         <div class="col-2 d-flex flex-column justify-content-between">
             <img src="../static/img/avatars/profile_2.webp" class="img-thumbnail rounded my-img mb-3"
                 alt="avatar">
-            <input 
-                class="form-control w-75" 
-                type="number" 
-                value="{{answer.likes_count}}"
-                min="{{ answer.likes_count }}"
-                max="{{ answer.likes_count|add:1 }}"
-            >
+                {% if request.user.is_authenticated %}
+                    <div style="display: flex; align-items: center">
+                        <img 
+                            src="{% if answer.liked_me %}{% static '/img/like.png' %}{%else%}{% static '/img/no_like.png' %}{% endif %}" 
+                            style="width: 28px; cursor: pointer" 
+                            onclick="onLikeButtonClick(event);" 
+                            data-answer-id="{{ answer.id }}"
+                        />
+                        <span id="answer_{{ answer.id }}_likes" style="font-weight: 600; line-height: 1; margin-left: 8px;">
+                            {{answer.answer_like.count}}
+                        </span>
+                    </div>
+                {% else %}
+                    <div style="display: flex; align-items: center">
+                        <img 
+                            src="{% static '/img/like.png' %}" 
+                            style="width: 28px;" 
+                        />
+                        <span id="answer_{{ answer.id }}_likes" style="font-weight: 600; line-height: 1; margin-left: 8px;">
+                            {{answer.answer_like.count}}
+                        </span>
+                    </div>
+                {% endif %}
         </div>
         <div class="col-10 d-flex flex-column justify-content-between">
             <div>
@@ -18,12 +35,24 @@
                 </article>
             </div>
             <div class="d-flex flex-wrap gap-2 align-items-center">
-                {% if answer.isRight %}
-                    <input type="checkbox" id="correct_{{answer.id}}" checked>
-                {% else %}
-                    <input type="checkbox" id="correct_{{answer.id}}">
-                {% endif %}
+                {% if request.user.is_authenticated and answer.author == request.user.profile %}
+                <input 
+                    type="radio"
+                    name="correct" 
+                    id="correct_{{answer.id}}" 
+                    {% if answer.isRight %} 
+                    checked
+                    {% endif %}
+                    onclick="onRightAnswerClick(event)"
+                    data-question-id="{{answer.question.id}}"
+                    data-answer-id="{{answer.id}}"
+                >
                 <label for="correct_{{answer.id}}">Correct</label>
+                {% else %}
+                    {% if answer.isRight %} 
+                        <b style="color: green">Right answer!</b>
+                    {% endif %}
+                {% endif %}
             </div>
         </div>
     </div>

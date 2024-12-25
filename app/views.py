@@ -29,3 +29,11 @@ def settingsPage(request):
 
 def logoutPage(request):
     return logoutContext(request)
+
+# AJAX
+
+def createLike(request):
+    return createLikeResponse(request)
+
+def setRightAnswer(request):
+    return setRightAnswerResponse(request)

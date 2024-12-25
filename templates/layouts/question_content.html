@@ -1,21 +1,28 @@
+{% load static %}
 <div class="col-2 d-flex flex-column justify-content-between">
     <img src="../static/img/avatars/profile_2.webp" class="img-thumbnail rounded my-img mb-3" alt="avatar" />
-    {% if question.myLike and False %}
-    <input 
-        class="form-control w-75" 
-        type="number" 
-        value="{{ question.question_like.count }}"
-        min="{{ question.question_like.count|add:-1 }}"
-        max="{{ question.question_like.count }}"
-    >
+    {% if request.user.is_authenticated %}
+        <div style="display: flex; align-items: center">
+            <img 
+                src="{% if question.liked_me %}{% static '/img/like.png' %}{%else%}{% static '/img/no_like.png' %}{% endif %}" 
+                style="width: 28px; cursor: pointer" 
+                onclick="onLikeButtonClick(event);" 
+                data-question-id="{{ question.id }}"
+            />
+            <span id="question_{{ question.id }}_likes" style="font-weight: 600; line-height: 1; margin-left: 8px;">
+                {{question.question_like.count}}
+            </span>
+        </div>
     {% else %}
-    <input 
-        class="form-control w-75" 
-        type="number" 
-        value="{{ question.question_like.count }}"
-        min="{{ question.question_like.count }}"
-        max="{{ question.question_like.count|add:1 }}"
-    >
+        <div style="display: flex; align-items: center">
+            <img 
+                src="{% static '/img/like.png' %}" 
+                style="width: 28px;" 
+            />
+            <span id="question_{{ question.id }}_likes" style="font-weight: 600; line-height: 1; margin-left: 8px;">
+                {{question.question_like.count}}
+            </span>
+        </div>
     {% endif %}
 </div>
 <div class="col-10 d-flex flex-column justify-content-between">
